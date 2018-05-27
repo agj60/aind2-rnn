@@ -10,14 +10,10 @@ import keras
 # and window-size into a set of input/output pairs for use with our RNN model
 def window_transform_series(series, window_size):
     # containers for input/output pairs
-    X = []
-    y = []
+    series_length = np.size(series)
+    X = [series[i : i + window_size] for i in range(series_length - window_size)]
+    y = [series[i + window_size] for i in range(series_length - window_size)]
     
-    for i in range(len(series)-window_size-1):
-        X.append(series[range(i,i+window_size)])
-        y.append(series[i+window_size])
-    
-
     # reshape each 
     X = np.asarray(X)
     X.shape = (np.shape(X)[0:2])
@@ -53,13 +49,11 @@ def cleaned_text(text):
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
 def window_transform_text(text, window_size, step_size):
     # containers for input/output pairs
-    inputs = []
-    outputs = []
     
-    for i in range(0, len(text) - window_size - 1, step_size):
-        inputs.append(text[i:i + window_size])
-        outputs.append(text[i + window_size])
-
+    text_length = len(text)
+    inputs = [text[i : i + window_size] for i in range(0, text_length - window_size, step_size)]
+    outputs = [text[i + window_size] for i in range(0, text_length - window_size, step_size)]
+    
     return inputs,outputs
 
 # TODO build the required RNN model: 
