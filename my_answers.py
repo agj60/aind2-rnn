@@ -43,8 +43,7 @@ def cleaned_text(text):
     text = text.lower()
     chars_to_eliminate = [char for char in set(text) if 
         char not in punctuation and 
-        not char.islower() and 
-        not char.isdigit()]
+        not char.islower()]
     
     for char  in chars_to_eliminate:
         text = text.replace(char, ' ')
